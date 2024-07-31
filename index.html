@@ -45,6 +45,28 @@
         .button:hover {
             background-color: #333333;
         }
+        #emailForm {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        input[type="email"] {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 1em;
+        }
+        input[type="submit"] {
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #333333;
+        }
     </style>
 </head>
 <body>
@@ -52,7 +74,32 @@
         <h1>Jet Code</h1>
         <p>Transform Ideas into Reality at Jet Speed</p>
         <p>Accelerate Your Digital Journey with Custom No-Code Solutions</p>
-        <button class="button">Get Started</button>
+        <button class="button" onclick="showEmailForm()">Get Started</button>
     </header>
+    <div id="emailForm">
+        <form id="form" onsubmit="saveEmail(event)">
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <script>
+        function showEmailForm() {
+            document.getElementById('emailForm').style.display = 'flex';
+        }
+
+        function saveEmail(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            if (email) {
+                let emails = localStorage.getItem('emails');
+                emails = emails ? JSON.parse(emails) : [];
+                emails.push(email);
+                localStorage.setItem('emails', JSON.stringify(emails));
+                alert('Email saved successfully!');
+                document.getElementById('form').reset();
+            }
+        }
+    </script>
 </body>
 </html>
